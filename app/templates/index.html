@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sophia Helps</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='calendar.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+    <nav>
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('calendar') }}">Calendar</a>
+      <a href="{{ url_for('tasks') }}">Tasks</a>
+      <a href="{{ url_for('shop') }}">Shop</a>
+    </nav>
+
+    <div class="container">
+      <section>
+        <form id="assignmentForm" method="POST" action="{{ url_for('index') }}">
+          
+          <label for="task_name">Task Name:</label><br>
+          <input type="text" name="task_name" required><br><br>
+
+          <textarea id="assigment" name="description" placeholder="Type your assignment here..." required></textarea>
+          
+          <input type="date" id="deadline" name="deadline" required/>
+          <input type="submit" value="Submit" required/>
+        </form>
+
+        {% if response %}
+          <h3>AI's Suggestion:</h3>
+          <p>{{ response }}</p>
+        {% endif %}
+      </section>
+
+      <!--     
+      <h2>AI Task Planner</h2>
+      <form method="POST">
+        <label for="task_name">Task Name:</label><br>
+        <input type="text" name="task_name" required><br><br>
+
+        <label for="deadline">Deadline:</label><br> 
+        <input type="date" name="deadline" required><br><br>
+
+        <label for="hours">Available Hours Per Day:</label><br>
+        <input type="number" name="hours" min="1" required><br><br>
+
+        <input type="submit" value="Get Plan"> 
+      </form> -->
+      <section>
+        <h2>Speech to Text</h2>
+        <i class="fa fa-microphone" style="color: rgb(221,146,67); font-size: 2.5rem; cursor: pointer;"></i>
+        <p><strong>Transcript:</strong></p>
+        <textarea id="output" rows="4" cols="50" readonly></textarea>
+      </section>
+    </div>
+
+    <script src="backend/mic_transcribe.js"></script>
+    <script>
+      const assignmentBox = document.getElementById('assigment');
+      assignmentBox.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+      });
+    </script>
+  </body>
+</html>
